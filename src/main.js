@@ -6,18 +6,25 @@ import axios from 'axios'
 const store = createStore({
     state() {
         return {
-            counter: 0
+            counter: 0,
+            history: [0]
         }
     },
     mutations: {
         // Menambah angka di input ke counter
         addToCounter(state, payload) {
             state.counter = state.counter + payload;
+
+            // Adding to history
+            state.history.push(state.counter)
         },
 
         // Mengurangi angka pada counter
         substractFromCounter(state, payload) {
             state.counter = state.counter - payload;
+
+            // Adding to history
+            state.history.push(state.counter)
         },
     },
     actions: {
@@ -27,6 +34,18 @@ const store = createStore({
 
             // Menggunakan commit bisa memanggil mutation
             context.commit("addToCounter", data.data)
+        }
+    },
+    getters: {
+        activeIndexes: (state) => (payload) => {
+            let indexes = [];
+            state.history.forEach((number, index) => {
+                if(number === payload) {
+                    indexes.push(index)
+                }
+            })
+
+            return indexes
         }
     }
 })
