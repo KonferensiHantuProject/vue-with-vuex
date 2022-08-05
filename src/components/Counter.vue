@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Penghitung dengn Vuex</h1>
-    <h1 class="counter">{{ $store.state.counter }}</h1>
+    <h1 class="counter">{{ counter }}</h1>
 
     <!-- Button Minus-->
     <button>-</button>
@@ -16,11 +16,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     data() {
         return {
             value: 1,
         }
+    },
+    computed: {
+        ...mapState(["counter"])
     }
 }
 </script>
